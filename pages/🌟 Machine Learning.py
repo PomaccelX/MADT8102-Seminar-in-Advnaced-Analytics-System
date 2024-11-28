@@ -182,13 +182,8 @@ if st.button("Run ML"):
 
     # ---------------- End button session ----------------
     st.session_state.query_run = True
-
-    # Set up two columns
-    col1, col2 = st.columns(2)
-    with col1:
-        st.session_state.cust_lo_df = cust_lo_df
-    with col2:
-        st.session_state.sales_df = sales_df
+    st.session_state.cust_lo_df = cust_lo_df
+    st.session_state.sales_df = sales_df
 
     for log in adjustment_logs:
         st.write(f"Log: {log}")
@@ -294,7 +289,13 @@ if "cust_lo_df" in st.session_state and st.session_state.query_run == True:
     # Display on Streamlit
     st.title("K-Mean Clustering Visualization")
     st.plotly_chart(fig, use_container_width=True)
-    st.write("Customer dataframe")
-    st.dataframe(df.loc[:, ['BranchID', 'BranchName', 'province_name_eng', 'zoneId', 'distance', 'duration', 'Cluster']])
-    st.write("Sale dataframe")
-    st.dataframe(sales_filtered.loc[:, ['sales_id', 'salesperson_name', 'zoneId']])
+    
+    
+    # Set up two columns
+    col1, col2 = st.columns(2)
+    with col1:
+        st.write("Customer dataframe")
+        st.dataframe(df.loc[:, ['BranchID', 'BranchName', 'province_name_eng', 'zoneId', 'distance', 'duration', 'Cluster']])
+    with col2:
+        st.write("Sale dataframe")
+        st.dataframe(sales_filtered.loc[:, ['sales_id', 'salesperson_name', 'zoneId']])
