@@ -1,11 +1,10 @@
-
 import streamlit as st
 
 # Title of the page
 st.set_page_config(
-    page_title="🏠 MADT8102 FINAL PROJECT END TO END ",
+    page_title="🏠 MADT8102 FINAL PROJECT END TO END",
     page_icon="🏠",
-    layout="wide" 
+    layout="wide"
 )
 
 st.title(" 🤵‍♂️ Team Members")
@@ -32,10 +31,16 @@ for index, (name, info) in enumerate(team_members.items()):
     with columns[col_index]:
         try:
             st.image(info['image'], width=200)  # Display image
-            # Add space between the image and text
-            st.markdown("<br>", unsafe_allow_html=True)  # This adds an empty line
-            st.subheader(name)  # Display name
-            st.write(f"ID: {info['id']}")  # Display ID
+            # Center-align text with custom HTML
+            st.markdown(
+                f"""
+                <div style="text-align: center;">
+                    <h3>{name}</h3>
+                    <p>ID: {info['id']}</p>
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
         except Exception as e:
             st.write(f"Error loading image: {e}")
 
