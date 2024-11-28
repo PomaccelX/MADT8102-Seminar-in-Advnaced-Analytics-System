@@ -40,6 +40,7 @@ else:
 ##--------------------------------------------------------------------------------------
 data_dict = """ If  it's a question or requirement or any wording that about retrieving data from a database base on 
                     those cosist of 
+                    
                     table 1 is 'madt8102-chatbot-final-project.datasets.fact_transaction'
 
                     | Column Name                       | Data Type   | Description                                 |
@@ -498,7 +499,7 @@ if gemini_api_key :
 # i want to know sales person name by each province
 
 
-# i want to know product lens type and Quantity  of each lens type 
+# can you help me  i want to know product lens type and Quantity  of each lens type 
 # thank you
 
 
