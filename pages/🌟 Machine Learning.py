@@ -36,21 +36,50 @@ else:
     st.error("Failed to load Google Service Account Key. Please check your secrets.")
 
 # ---------------- Button to run ML ----------------
-if "query_run" not in st.session_state:
-    st.session_state.query_run = False
+if "ml_run" not in st.session_state:
+    st.session_state.ml_run = False
 
-if st.button("Run Query"):
+if st.button("Run ML"):
 
     # ---------------- Query function ----------------
     # client = bigquery.Client.from_service_account_json(json_file)
 
+    def init_bigquery_client():
+        try:
+            # Load Google Service Account Key from secrets
+            google_service_account_key = st.secrets["google"].get("service_account_key")
+
+            if google_service_account_key:
+                # Parse the service account JSON string
+                service_account_data = json.loads(google_service_account_key)
+
+                # Initialize BigQuery client using the service account JSON
+                client = bigquery.Client.from_service_account_info(service_account_data)
+                #st.success("BigQuery client initialized successfully!")
+                return client
+            else:
+                st.error("Google Service Account Key not found in secrets. Please check your configuration.")
+                return None
+
+        except json.JSONDecodeError as e:
+            st.error(f"Failed to parse Google Service Account Key: {e}")
+            return None
+        except Exception as e:
+            st.error(f"Error initializing BigQuery client: {e}")
+            return None
+
+
     def run_bigquery_query(query):
+        client = init_bigquery_client()
         if client and query:
+            query = query
             job_config = bigquery.QueryJobConfig()
             query_job = client.query(query, job_config=job_config)
             results = query_job.result()
+
             df = results.to_dataframe()
             return df
+
         
     # ---------------- Customer location dataframe ----------------
     cust_lo_query = """
