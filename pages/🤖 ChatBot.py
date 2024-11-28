@@ -39,7 +39,8 @@ else:
 
 ##--------------------------------------------------------------------------------------
 data_dict = """ If  it's a question or requirement or any wording that about retrieving data from a database base on 
-                    the table name is 'madt8102-chatbot-final-project.datasets.fact_transaction'
+                    those cosist of 
+                    table 1 is 'madt8102-chatbot-final-project.datasets.fact_transaction'
 
                     | Column Name                       | Data Type   | Description                                 |
                     |-----------------------------------|-------------|---------------------------------------------|
@@ -67,13 +68,13 @@ data_dict = """ If  it's a question or requirement or any wording that about ret
                     | RegionName                        | STRING      | Name of the region.                         |
                     | Discount                          | FLOAT64     | Discount applied to the sale, if any.       |
 
-                    the table name is 'madt8102-chatbot-final-project.datasets.customer_account'
+                    table 2 is 'madt8102-chatbot-final-project.datasets.customer_account'
                     | Column Name   | Data Type   | Description                                |
                     |---------------|-------------|--------------------------------------------|
                     | AccountId     | STRING      | Unique identifier for the account.         |
                     | AccountName   | STRING      | Name associated with the account.          |
 
-                    the table name is 'madt8102-chatbot-final-project.datasets.customer_branch'
+                    table 3 is 'madt8102-chatbot-final-project.datasets.customer_branch'
                     | Column Name        | Data Type   | Description                                                |
                     |--------------------|-------------|------------------------------------------------------------|
                     | BranchID           | STRING      | Unique identifier for the branch.                         |
@@ -85,14 +86,14 @@ data_dict = """ If  it's a question or requirement or any wording that about ret
                     | Latitude           | FLOAT       | Latitude coordinate of the branch's location.            |
                     | Longitude          | FLOAT       | Longitude coordinate of the branch's location.           |
 
-                    the table name is 'madt8102-chatbot-final-project.datasets.customer_sales_table'
+                    table 4  is 'madt8102-chatbot-final-project.datasets.customer_sales_table'
                     | Column Name | Data Type | Description                               |
                     |-------------|-----------|-------------------------------------------|
                     | branchID    | STRING    | Unique identifier for the branch.         |
                     | sales_id    | STRING    | Unique identifier for the sales invoice.  |
                     | regionId    | STRING    | Unique identifier for the sales region.   |
 
-                    the table name is 'madt8102-chatbot-final-project.datasets.date_time'
+                    table 5 is 'madt8102-chatbot-final-project.datasets.date_time'
                     | Column Name   | Data Type   | Description                                                              |
                     |---------------|-------------|--------------------------------------------------------------------------|
                     | Date          | DATE        | The full calendar date in the format 'YYYY-MM-DD'.                      |
@@ -107,7 +108,7 @@ data_dict = """ If  it's a question or requirement or any wording that about ret
                     | DayOfYear     | INTEGER     | The day number in the year (1 for January 1, 365/366 for December 31).  |
                     | IsWeekend     | BOOLEAN     | Indicates if the day is a weekend (TRUE for Saturday/Sunday, FALSE otherwise). |
 
-                    the table name is 'madt8102-chatbot-final-project.datasets.product'
+                    table 6 is 'madt8102-chatbot-final-project.datasets.product'
                     | Column Name        | Data Type   | Description                                          |
                     |--------------------|-------------|------------------------------------------------------|
                     | ProductId          | STRING      | Unique identifier for the product.                  |
@@ -117,7 +118,7 @@ data_dict = """ If  it's a question or requirement or any wording that about ret
                     | Lens_Type          | STRING      | Specifies the type of lens (e.g., single, bifocal). |
                     | Price              | FLOAT       | Price of the product.                               |               
 
-                     the table name is 'madt8102-chatbot-final-project.datasets.province'
+                    table 7 is 'madt8102-chatbot-final-project.datasets.province'
                     | Column Name        | Data Type   | Description                                               |
                     |--------------------|-------------|-----------------------------------------------------------|
                     | ProvinceID         | STRING      | Unique identifier for the province.                      |
@@ -126,19 +127,19 @@ data_dict = """ If  it's a question or requirement or any wording that about ret
                     | Province_Name_Eng  | STRING      | Name of the province in English.                         |
                     | ZoneID             | STRING      | Identifier for the zone to which the province belongs.   |
 
-                    the table name is 'madt8102-chatbot-final-project.datasets.region'
+                    table 8 is 'madt8102-chatbot-final-project.datasets.region'
                     | Column Name      | Data Type   | Description                                     |
                     |------------------|-------------|-------------------------------------------------|
                     | region_name      | STRING      | Identifier for the sales region_name.                 |
                     | regionId         | STRING      | Identifier for the sales region.   
 
-                    the table name is 'madt8102-chatbot-final-project.datasets.return'
+                    table 9 is 'madt8102-chatbot-final-project.datasets.return'
                     | Column Name       | Data Type   | Description                                    |
                     |-------------------|-------------|------------------------------------------------|
                     | reorder_cause_id  | STRING      | Unique identifier for the reorder cause.      |
                     | cause             | STRING      | Description or name of the reorder cause.     |
 
-                    the table name is 'madt8102-chatbot-final-project.datasets.return_transaction'
+                    table 10 is 'madt8102-chatbot-final-project.datasets.return_transaction'
                     | Column Name        | Data Type   | Description                                      |
                     |--------------------|-------------|--------------------------------------------------|
                     | InvoiceNo          | STRING      | Unique identifier for the invoice.              |
@@ -147,7 +148,7 @@ data_dict = """ If  it's a question or requirement or any wording that about ret
                     | TypeId             | STRING      | Identifier for the product type or category.    |
                     | Reorder_Cause_ID   | STRING      | Identifier for the cause of reorder.            |
 
-                    the table name is 'madt8102-chatbot-final-project.datasets.sales_person'
+                    table 11 is 'madt8102-chatbot-final-project.datasets.sales_person'
                     | Column Name      | Data Type   | Description                                     |
                     |------------------|-------------|-------------------------------------------------|
                     | sales_id         | STRING      | Unique identifier for the sales transaction.   |
@@ -155,13 +156,13 @@ data_dict = """ If  it's a question or requirement or any wording that about ret
                     | zoneId           | STRING      | Identifier for the sales zone.                 |
                     | regionId         | STRING      | Identifier for the sales region. 
 
-                    the table name is 'madt8102-chatbot-final-project.datasets.sell_item_type'
+                    table 12 is 'madt8102-chatbot-final-project.datasets.sell_item_type'
                     | Column Name | Data Type | Description                               |
                     |-------------|-----------|-------------------------------------------|
                     | typeId      | STRING    | Unique identifier for the item type.     |
                     | type_name   | STRING    | Name or description of the item type.    |
                  
-                    the table name is 'madt8102-chatbot-final-project.datasets.transaction_detail'
+                    table 13 is 'madt8102-chatbot-final-project.datasets.transaction_detail'
                     | Column Name | Data Type | Description                               |
                     |-------------|-----------|-------------------------------------------|
                     | InvoiceNo   | STRING    | Unique identifier for the invoice.       |
@@ -170,14 +171,14 @@ data_dict = """ If  it's a question or requirement or any wording that about ret
                     | Quantity    | INTEGER   | Number of units sold.                    |
                     | TypeId      | STRING    | Identifier for the product type.         |
 
-                     the table name is 'madt8102-chatbot-final-project.datasets.transaction_header'
+                     table 14 is 'madt8102-chatbot-final-project.datasets.transaction_header'
                     | Column Name   | Data Type   | Description                                |
                     |---------------|-------------|--------------------------------------------|
                     | InvoiceNo     | STRING      | Unique identifier for the invoice.        |
                     | InvoiceDate   | DATE        | The date when the invoice was created.     |
                     | BranchID      | STRING      | Unique identifier for the branch.         |
 
-                    the table name is 'madt8102-chatbot-final-project.datasets.zone'
+                    table 15 is 'madt8102-chatbot-final-project.datasets.zone'
                     | Column Name   | Data Type   | Description                                          |
                     |---------------|-------------|------------------------------------------------      |
                     | zoneId        | STRING      | Unique identifier for the zone.                      |
