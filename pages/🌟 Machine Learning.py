@@ -36,50 +36,21 @@ else:
     st.error("Failed to load Google Service Account Key. Please check your secrets.")
 
 # ---------------- Button to run ML ----------------
-if "ml_run" not in st.session_state:
-    st.session_state.ml_run = False
+if "query_run" not in st.session_state:
+    st.session_state.query_run = False
 
-if st.button("Run ML"):
+if st.button("Run Query"):
 
     # ---------------- Query function ----------------
     # client = bigquery.Client.from_service_account_json(json_file)
 
-    def init_bigquery_client():
-        try:
-            # Load Google Service Account Key from secrets
-            google_service_account_key = st.secrets["google"].get("service_account_key")
-
-            if google_service_account_key:
-                # Parse the service account JSON string
-                service_account_data = json.loads(google_service_account_key)
-
-                # Initialize BigQuery client using the service account JSON
-                client = bigquery.Client.from_service_account_info(service_account_data)
-                #st.success("BigQuery client initialized successfully!")
-                return client
-            else:
-                st.error("Google Service Account Key not found in secrets. Please check your configuration.")
-                return None
-
-        except json.JSONDecodeError as e:
-            st.error(f"Failed to parse Google Service Account Key: {e}")
-            return None
-        except Exception as e:
-            st.error(f"Error initializing BigQuery client: {e}")
-            return None
-
-
     def run_bigquery_query(query):
-        client = init_bigquery_client()
         if client and query:
-            query = query
             job_config = bigquery.QueryJobConfig()
             query_job = client.query(query, job_config=job_config)
             results = query_job.result()
-
             df = results.to_dataframe()
             return df
-
         
     # ---------------- Customer location dataframe ----------------
     cust_lo_query = """
@@ -180,28 +151,48 @@ if st.button("Run ML"):
     cust_lo_df, adjustment_logs = cluster_by_zone(cust_lo_df, zone_clusters)
     # st.dataframe(cust_lo_df)
 
+    # ---------------- End button session ----------------
+    st.session_state.query_run = True
+    st.session_state.cust_lo_df = cust_lo_df
+    st.session_state.sales_df = sales_df
+
     for log in adjustment_logs:
         st.write(f"Log: {log}")
 
-    # ---------------- Show graph ----------------
-    # ฟังก์ชันคำนวณระยะทางระหว่างสองจุด (ใช้ geopy)
-    def calculate_distance(center, point):
-        return geodesic(center, point).kilometers
+# ---------------- Show graph ----------------
+# ฟังก์ชันคำนวณระยะทางระหว่างสองจุด (ใช้ geopy)
+def calculate_distance(center, point):
+    return geodesic(center, point).kilometers
 
-    # คำนวณค่า Center และระยะทางที่ไกลที่สุดในแต่ละ Cluster
-    def calculate_cluster_info(group):
-        center_lat = group['Latitude'].mean()
-        center_lon = group['Longitude'].mean()
-        center = (center_lat, center_lon)
+# คำนวณค่า Center และระยะทางที่ไกลที่สุดในแต่ละ Cluster
+def calculate_cluster_info(group):
+    center_lat = group['Latitude'].mean()
+    center_lon = group['Longitude'].mean()
+    center = (center_lat, center_lon)
 
-        # คำนวณระยะทางจาก center ไปยังแต่ละจุดใน Cluster
-        distances = group.apply(lambda row: calculate_distance(center, (row['Latitude'], row['Longitude'])), axis=1)
-        max_distance = distances.max()
+    # คำนวณระยะทางจาก center ไปยังแต่ละจุดใน Cluster
+    distances = group.apply(lambda row: calculate_distance(center, (row['Latitude'], row['Longitude'])), axis=1)
+    max_distance = distances.max()
 
-        return pd.Series({'center_lat': center_lat, 'center_lon': center_lon, 'max_distance': max_distance})
-    
+    return pd.Series({'center_lat': center_lat, 'center_lon': center_lon, 'max_distance': max_distance})
+
+# ทำงานเมื่อข้อมูลอยู่ใน session_state
+if "cust_lo_df" in st.session_state and st.session_state.query_run == True:
+    cust_lo_df = st.session_state.cust_lo_df
+    sales_df = st.session_state.sales_df
+
     # Select zoneId
-    df = cust_lo_df.copy()
+    zone_options = ['All'] + list(cust_lo_df['zoneId'].unique())  # เพิ่ม 'All' เข้าไปในตัวเลือก
+    selected_zone = st.selectbox("Select ZoneID", zone_options)
+
+    # กรองข้อมูลตามตัวเลือกใน Dropdown
+    if selected_zone == 'All':
+        df = cust_lo_df.copy()
+        sales_filtered = sales_df.copy()
+    else:
+        df = cust_lo_df[cust_lo_df['zoneId'] == selected_zone].copy()
+        sales_filtered = sales_df[sales_df['zoneId'].astype(str) == selected_zone]
+    
     cluster_summary = df.groupby('Cluster', group_keys=False).apply(calculate_cluster_info).reset_index()
     
     # สร้าง Scatter Mapbox
@@ -212,12 +203,6 @@ if st.button("Run ML"):
         zoom=5, center={"lat": 13.736717, "lon": 100.523186},
         labels={"Cluster": "Cluster"},
         text=[f"ZoneID: {row['zoneId']}" for _, row in df.iterrows()]
-    )
-
-    # Adjusting the size of the graph
-    fig.update_layout(
-        height=800,  # Height in pixels
-        width=1200   # Width in pixels
     )
 
     # เพิ่ม Centroids
@@ -272,9 +257,10 @@ if st.button("Run ML"):
         coloraxis_showscale=False  # ปิดการแสดงผลของ Heatmap
     )
 
-    # แสดงผลใน Streamlit
-    st.title("Clusters Visualization with Mapbox")
+    # Display on Streamlit
+    st.title("K-Mean Clustering Visualization")
     st.plotly_chart(fig, use_container_width=True)
-
-    # ---------------- End button session ----------------
-    st.session_state.ml_run = True
+    st.write("Customer dataframe")
+    st.dataframe(df.loc[:, ['BranchID', 'BranchName', 'province_name_eng', 'zoneId', 'distance', 'duration', 'Cluster']])
+    st.write("Sale dataframe")
+    st.dataframe(sales_filtered.loc[:, ['sales_id', 'salesperson_name', 'zoneId']])
