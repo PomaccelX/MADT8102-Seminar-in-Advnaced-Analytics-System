@@ -7,7 +7,13 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title(" 🤵‍♂️ Team Members")
+# Center-aligned title
+st.markdown(
+    """
+    <h1 style="text-align: center;">🤵‍♂️ Team Members</h1>
+    """,
+    unsafe_allow_html=True
+)
 
 # Create a dictionary of team members and their information
 team_members = {
@@ -30,11 +36,11 @@ for index, (name, info) in enumerate(team_members.items()):
     # Display in the appropriate column
     with columns[col_index]:
         try:
-            st.image(info['image'], width=200)  # Display image
-            # Center-align text with custom HTML
+            # Center-align image and text
             st.markdown(
                 f"""
                 <div style="text-align: center;">
+                    <img src="{info['image']}" style="width: 200px; border-radius: 10px; margin-bottom: 10px;">
                     <h3>{name}</h3>
                     <p>ID: {info['id']}</p>
                 </div>
