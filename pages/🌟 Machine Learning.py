@@ -274,20 +274,20 @@ if "cust_lo_df" in st.session_state and st.session_state.query_run == True:
         ))
     
     # ปรับตำแหน่งของ Legend
-    fig.update_layout(
-        legend=dict(
-            title="Clusters",
-            orientation="v",  # ตั้งให้แสดงในแนวตั้ง
-            x=1.00,  # ย้ายไปทางขวา
-            y=1.00,  # ตั้งตำแหน่งแนวตั้ง
-            bgcolor="rgba(255, 255, 255, 0.8)",  # สีพื้นหลังของ Legend
-            borderwidth=1,  # ขอบของ Legend
-            bordercolor='black',  # สีขอบของ Legend
-            width=1200,  # Width of the figure
-            height=800   # Height of the figure
-        ),
-        coloraxis_showscale=False  # ปิดการแสดงผลของ Heatmap
-    )
+        fig.update_layout(
+            legend=dict(
+                title="Clusters",
+                orientation="v",  # Vertical legend orientation
+                x=1.00,  # Position legend to the far right
+                y=1.00,  # Position legend at the top
+                bgcolor="rgba(255, 255, 255, 0.8)",  # Semi-transparent white background
+                borderwidth=1,  # Border width around the legend
+                bordercolor='black'  # Border color for the legend
+            ),
+            coloraxis_showscale=False,  # Hide color scale if used with color axis
+            width=1200,  # Overall figure width
+            height=800   # Overall figure height
+        )
 
     # Display on Streamlit
    
