@@ -211,6 +211,7 @@ if "cust_lo_df" in st.session_state and st.session_state.query_run == True:
     sales_df = st.session_state.sales_df
 
     # Select zoneId
+    st.title("K-Mean Clustering Visualization")
     zone_options = ['All'] + list(cust_lo_df['zoneId'].unique())  # เพิ่ม 'All' เข้าไปในตัวเลือก
     selected_zone = st.selectbox("Select ZoneID", zone_options)
 
@@ -287,7 +288,7 @@ if "cust_lo_df" in st.session_state and st.session_state.query_run == True:
     )
 
     # Display on Streamlit
-    st.title("K-Mean Clustering Visualization")
+   
     st.plotly_chart(fig, use_container_width=True)
     
     
