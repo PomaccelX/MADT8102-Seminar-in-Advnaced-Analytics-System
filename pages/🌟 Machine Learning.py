@@ -169,7 +169,7 @@ if st.button("Run ML"):
 
             # Clustering
             kmeans = KMeans(n_clusters=n_clusters, random_state=42)
-            zone_df['Cluster'] = kmeans.fit_predict(zone_df[['distance_km', 'duration_mins']])
+            zone_df['Cluster'] = kmeans.fit_predict(zone_df[['distance_km', 'duration_mins','Latitude','Longitude']])
             zone_df['Cluster'] += cluster_offset
             cluster_offset += n_clusters
             results.append(zone_df)
