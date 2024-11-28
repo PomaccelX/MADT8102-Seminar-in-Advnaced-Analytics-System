@@ -283,6 +283,8 @@ if "cust_lo_df" in st.session_state and st.session_state.query_run == True:
             bgcolor="rgba(255, 255, 255, 0.8)",  # สีพื้นหลังของ Legend
             borderwidth=1,  # ขอบของ Legend
             bordercolor='black',  # สีขอบของ Legend
+            width=1200,  # Width of the figure
+            height=800   # Height of the figure
         ),
         coloraxis_showscale=False  # ปิดการแสดงผลของ Heatmap
     )
