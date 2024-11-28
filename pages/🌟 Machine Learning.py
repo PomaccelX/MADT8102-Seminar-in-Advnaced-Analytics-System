@@ -182,8 +182,13 @@ if st.button("Run ML"):
 
     # ---------------- End button session ----------------
     st.session_state.query_run = True
-    st.session_state.cust_lo_df = cust_lo_df
-    st.session_state.sales_df = sales_df
+
+    # Set up two columns
+    col1, col2 = st.columns(2)
+    with col1:
+        st.session_state.cust_lo_df = cust_lo_df
+    with col2:
+        st.session_state.sales_df = sales_df
 
     for log in adjustment_logs:
         st.write(f"Log: {log}")
