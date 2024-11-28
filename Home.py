@@ -2,18 +2,12 @@ import streamlit as st
 
 # Title of the page
 st.set_page_config(
-    page_title="🏠 MADT8102 FINAL PROJECT END TO END",
+    page_title="🏠 MADT8102 FINAL PROJECT END TO END ",
     page_icon="🏠",
-    layout="wide"
+    layout="wide" 
 )
 
-# Center-aligned title
-st.markdown(
-    """
-    <h1 style="text-align: center;">🤵‍♂️ Team Members</h1>
-    """,
-    unsafe_allow_html=True
-)
+st.title(" 🤵‍♂️ Team Members")
 
 # Create a dictionary of team members and their information
 team_members = {
@@ -36,17 +30,11 @@ for index, (name, info) in enumerate(team_members.items()):
     # Display in the appropriate column
     with columns[col_index]:
         try:
-            # Center-align image and text
-            st.markdown(
-                f"""
-                <div style="text-align: center;">
-                    <img src="{info['image']}" style="width: 200px; border-radius: 10px; margin-bottom: 10px;">
-                    <h3>{name}</h3>
-                    <p>ID: {info['id']}</p>
-                </div>
-                """,
-                unsafe_allow_html=True
-            )
+            st.image(info['image'], width=200)  # Display image
+            # Add space between the image and text
+            st.markdown("<br>", unsafe_allow_html=True)  # This adds an empty line
+            st.subheader(name)  # Display name
+            st.write(f"ID: {info['id']}")  # Display ID
         except Exception as e:
             st.write(f"Error loading image: {e}")
 
