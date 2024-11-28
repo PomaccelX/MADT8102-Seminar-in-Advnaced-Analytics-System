@@ -286,7 +286,7 @@ if "cust_lo_df" in st.session_state and st.session_state.query_run == True:
         ),
         coloraxis_showscale=False,  # ปิดการแสดงผลของ Heatmap
         width=1200,  # Overall figure width
-        height=1000   # Overall figure height
+        height=700   # Overall figure height
     )
 
     # Display on Streamlit
